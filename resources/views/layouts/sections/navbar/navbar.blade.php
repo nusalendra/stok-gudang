@@ -37,27 +37,52 @@
 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
     <!-- Search -->
     <div class="navbar-nav align-items-center">
-        <div class="nav-item d-flex align-items-center">
-            <i class="bx bx-search fs-4 lh-0"></i>
-            <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2" placeholder="Search..."
-                aria-label="Search...">
+        <div class="app-brand justify-content-center">
+            @if (Auth::user()->role == 'Admin')
+                {{-- <h5 class="mt-3 text-dark fw-bold">Kerapatan Gereja Protestan Minahasa (KGPM)</h5> --}}
+            @elseif(Auth::user()->role == 'Karyawan')
+                <div class="navbar-nav align-items-center">
+                    <div class="app-brand justify-content-center">
+                        <nav class="navbar navbar-example navbar-expand-lg ">
+                            <img src="logo.jpg" alt="" width="50" class="me-2">
+                            <div class="container-fluid">
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#navbar-ex-2" aria-controls="navbar-ex-2" aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbar-ex-2">
+                                    <div class="navbar-nav me-auto">
+                                        <a class="nav-item nav-link {{ request()->routeIs('barang-masuk.index') ? 'active text-primary' : 'text-dark' }} fw-semibold"
+                                            href="{{ route('barang-masuk.index') }}">Barang Masuk</a>
+                                        <a class="nav-item nav-link {{ request()->routeIs('barang-keluar.index') ? 'active text-primary' : 'text-dark' }} fw-semibold"
+                                            href="{{ route('barang-keluar.index') }}">Barang Keluar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
     <!-- /Search -->
     <ul class="navbar-nav flex-row align-items-center ms-auto">
-
-        <!-- Place this tag where you want the button to render. -->
-        <li class="nav-item lh-1 me-3">
-            <a class="github-button" href="https://github.com/themeselection/sneat-html-laravel-admin-template-free"
-                data-icon="octicon-star" data-size="large" data-show-count="true"
-                aria-label="Star themeselection/sneat-html-laravel-admin-template-free on GitHub">Star</a>
-        </li>
-
         <!-- User -->
         <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                <div class="avatar avatar-online">
-                    <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle">
+                <div class="d-flex">
+                    <div class="flex-shrink-0 me-3">
+                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle">
+                    </div>
+                    <div class="flex-grow-1">
+                        @if (Auth::user()->role == 'Admin')
+                            <span class="fw-bold d-block">{{ Auth::user()->email }}</span>
+                        @else
+                            <span class="fw-bold d-block">{{ Auth::user()->karyawan->nama_lengkap }}</span>
+                        @endif
+                        <small class="text-muted">{{ Auth::user()->role }}</small>
+                    </div>
                 </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
@@ -65,41 +90,18 @@
                     <a class="dropdown-item" href="javascript:void(0);">
                         <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
-                                <div class="avatar avatar-online">
-                                    <img src="{{ asset('assets/img/avatars/1.png') }}" alt
-                                        class="w-px-40 h-auto rounded-circle">
-                                </div>
+                                <img src="{{ asset('assets/img/avatars/1.png') }}" alt
+                                    class="w-px-40 h-auto rounded-circle">
                             </div>
                             <div class="flex-grow-1">
-                                <span class="fw-medium d-block">John Doe</span>
-                                <small class="text-muted">Admin</small>
+                                @if (Auth::user()->role == 'Admin')
+                                    <span class="fw-bold d-block">{{ Auth::user()->email }}</span>
+                                @else
+                                    <span class="fw-bold d-block">{{ Auth::user()->karyawan->nama_lengkap }}</span>
+                                @endif
+                                <small class="text-muted">{{ Auth::user()->role }}</small>
                             </div>
                         </div>
-                    </a>
-                </li>
-                <li>
-                    <div class="dropdown-divider"></div>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="javascript:void(0);">
-                        <i class="bx bx-user me-2"></i>
-                        <span class="align-middle">My Profile</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="javascript:void(0);">
-                        <i class='bx bx-cog me-2'></i>
-                        <span class="align-middle">Settings</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="javascript:void(0);">
-                        <span class="d-flex align-items-center align-middle">
-                            <i class="flex-shrink-0 bx bx-credit-card me-2 pe-1"></i>
-                            <span class="flex-grow-1 align-middle">Billing</span>
-                            <span
-                                class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                        </span>
                     </a>
                 </li>
                 <li>
