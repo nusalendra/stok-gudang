@@ -23,10 +23,9 @@ class LoginBasic extends Controller
       session()->regenerate();
       if (Auth::user()->role == "Admin") {
         return redirect('/dashboard');
+      } else if (Auth::user()->role == "Karyawan") {
+        return redirect('/barang-masuk');
       }
-      // else if (Auth::user()->role == "Peminjam") {
-      //   return redirect('/peminjaman-barang');
-      // }
     } else {
       return redirect()->back()->with('error', 'Username atau password anda salah!');
     }

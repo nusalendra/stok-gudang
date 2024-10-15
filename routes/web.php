@@ -47,6 +47,8 @@ use App\Http\Controllers\form_elements\BasicInput;
 use App\Http\Controllers\form_elements\InputGroups;
 use App\Http\Controllers\form_layouts\VerticalForm;
 use App\Http\Controllers\form_layouts\HorizontalForm;
+use App\Http\Controllers\Karyawan\BarangKeluarController;
+use App\Http\Controllers\Karyawan\BarangMasukController;
 use App\Http\Controllers\tables\Basic as TablesBasic;
 
 // Main Page Route
@@ -109,7 +111,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/ui/carousel', [Carousel::class, 'index'])->name('ui-carousel');
         Route::get('/ui/collapse', [Collapse::class, 'index'])->name('ui-collapse');
         Route::get('/ui/dropdowns', [Dropdowns::class, 'index'])->name('ui-dropdowns');
-        Route::get('/ui/footer', [Footer::class, 'index'])->name('ui-footer');
         Route::get('/ui/list-groups', [ListGroups::class, 'index'])->name('ui-list-groups');
         Route::get('/ui/modals', [Modals::class, 'index'])->name('ui-modals');
         Route::get('/ui/navbar', [Navbar::class, 'index'])->name('ui-navbar');
@@ -141,6 +142,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
     });
 
-    Route::group(['middleware' => 'role:Karyawan'], function () {});
+    Route::group(['middleware' => 'role:Karyawan'], function () {
+        Route::get('/barang-masuk', [BarangMasukController::class, 'index'])->name('barang-masuk.index');
+        Route::get('/barang-keluar', [BarangKeluarController::class, 'index'])->name('barang-keluar.index');
+    });
     Route::post('/logout', [LoginBasic::class, 'destroy']);
 });

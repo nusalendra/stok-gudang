@@ -23,7 +23,7 @@ class RoleMiddleware
             case 'Admin':
                 return redirect()->route('dashboard')->with('error', 'You do not have permission to access this page.');
             case 'Karyawan':
-                return redirect()->route('peminjaman-barang')->with('error', 'You do not have permission to access this page.');
+                return redirect()->route('barang-masuk')->with('error', 'You do not have permission to access this page.');
             default:
                 return redirect()->route('auth-login-basic')->with('error', 'You do not have permission to access this page.');
         }
