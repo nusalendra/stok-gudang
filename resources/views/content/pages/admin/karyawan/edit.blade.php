@@ -1,13 +1,13 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', ' Tambah Karyawan')
+@section('title', ' Edit Karyawan')
 
 @section('content')
     <div class="row">
         <div class="col-xxl">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5 class="py-2 mb-3 text-primary"><span class="text-muted fw-semibold">Form /</span> Tambah Karyawan
+                    <h5 class="py-2 mb-3 text-primary"><span class="text-muted fw-semibold">Form /</span> Edit Karyawan
                     </h5>
                 </div>
                 <div class="card-body">
@@ -70,7 +70,7 @@
                                 <a href="/karyawan">
                                     <button type="button" class="btn btn-danger">Kembali</button>
                                 </a>
-                                <button type="submit" class="btn btn-primary">Tambah</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </div>
                     </form>
