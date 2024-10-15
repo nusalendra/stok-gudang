@@ -63,7 +63,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
         Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier.index');
+
         Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
+        Route::get('/karyawan/create', [KaryawanController::class, 'create'])->name('karyawan.create');
+        Route::post('/karyawan', [KaryawanController::class, 'store'])->name('karyawan.store');
+        Route::get('/karyawan/{id}/edit', [KaryawanController::class, 'edit'])->name('karyawan.edit');
+        Route::put('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+        Route::delete('/karyawan/{id}', [KaryawanController::class, 'destroy'])->name('karyawan.destroy');
+
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
 
         // layout
