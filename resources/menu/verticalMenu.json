@@ -58,6 +58,30 @@
       ]
     },
     {
+      "name": "Barang",
+      "icon": "menu-icon tf-icons bx bx-package",
+      "slug": "barang.index",
+      "url": "barang"
+    },
+    {
+      "name": "Supplier",
+      "icon": "menu-icon tf-icons bx bx-buildings",
+      "slug": "supplier.index",
+      "url": "supplier"
+    },
+    {
+      "name": "Karyawan",
+      "icon": "menu-icon tf-icons bx bx-smile",
+      "slug": "karyawan.index",
+      "url": "karyawan"
+    },
+    {
+      "name": "Laporan",
+      "icon": "menu-icon tf-icons bx bxs-report",
+      "slug": "laporan.index",
+      "url": "laporan"
+    },
+    {
       "name": "Layouts",
       "icon": "menu-icon tf-icons bx bx-layout",
       "slug": "layouts",

@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\BarangController;
+use App\Http\Controllers\Admin\KaryawanController;
+use App\Http\Controllers\Admin\LaporanController;
+use App\Http\Controllers\Admin\SupplierController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dashboard\Analytics;
 use App\Http\Controllers\layouts\WithoutMenu;
@@ -46,6 +50,11 @@ use App\Http\Controllers\tables\Basic as TablesBasic;
 
 // Main Page Route
 Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
+
+Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier.index');
+Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
+Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
 
 // layout
 Route::get('/layouts/without-menu', [WithoutMenu::class, 'index'])->name('layouts-without-menu');
