@@ -4,8 +4,8 @@
 
 @section('content')
     <div class="text-end mb-3">
-        <a href="/barang/create">
-            <button type="button" class="btn btn-primary">Tambah Data</button>
+        <a href="/karyawan/create">
+            <button type="button" class="btn btn-primary">Tambah Karyawan</button>
         </a>
     </div>
     <div class="card">
@@ -24,7 +24,7 @@
                                 <th class="text-uppercase text-xs font-weight-bolder">Aksi</th>
                             </tr>
                         </thead>
-                        {{-- <tbody>
+                        <tbody>
                             @foreach ($data as $index => $item)
                                 <tr>
                                     <td>
@@ -37,45 +37,35 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $item->nama }}</h6>
+                                                <h6 class="mb-0 text-sm">{{ $item->karyawan->nama_lengkap }}</h6>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $item->stok }}</h6>
+                                                <h6 class="mb-0 text-sm">{{ $item->karyawan->jenis_kelamin }}</h6>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <a href="/gambar-barang/{{ $item->gambar }}" target="_blank">
-                                                    <img src="/gambar-barang/{{ $item->gambar }}" alt=""
-                                                        width="100">
-                                                </a>
+                                                <h6 class="mb-0 text-sm">{{ $item->karyawan->umur }} Tahun</h6>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $item->lokasi_barang }}</h6>
+                                                <h6 class="mb-0 text-sm">{{ $item->karyawan->nomor_telepon }}</h6>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $item->hari_batas_peminjaman }} Hari</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <a href="/barang/{{ $item->id }}/edit">
+                                                <a href="/karyawan/{{ $item->id }}/edit">
                                                     <button type="button" class="btn btn-warning">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                             height="16" fill="currentColor" class="bi bi-pencil-square"
@@ -90,7 +80,7 @@
                                                 </a>
                                             </div>
                                             <div class="ms-2 d-flex flex-column justify-content-center">
-                                                <form action="/barang/{{ $item->id }}" method="POST"
+                                                <form action="/karyawan/{{ $item->id }}" method="POST"
                                                     role="form text-left">
                                                     @csrf
                                                     @method('DELETE')
@@ -109,7 +99,7 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        </tbody> --}}
+                        </tbody>
                     </table>
                     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
                         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
