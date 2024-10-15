@@ -62,7 +62,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => 'role:Admin'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+
         Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier.index');
+        Route::get('/supplier/create', [SupplierController::class, 'create'])->name('supplier.create');
+        Route::post('/supplier', [SupplierController::class, 'store'])->name('supplier.store');
+        Route::get('/supplier/{id}/edit', [SupplierController::class, 'edit'])->name('supplier.edit');
+        Route::put('/supplier/{id}', [SupplierController::class, 'update'])->name('supplier.update');
+        Route::delete('/supplier/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
 
         Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
         Route::get('/karyawan/create', [KaryawanController::class, 'create'])->name('karyawan.create');
