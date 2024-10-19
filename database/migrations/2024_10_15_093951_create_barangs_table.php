@@ -18,9 +18,8 @@ return new class extends Migration
             $table->string('warna');
             $table->integer('harga_beli');
             $table->integer('harga_jual');
-            $table->string('deskripsi');
             $table->integer('stok');
-            $table->integer('total_stok_keluar');
+            $table->integer('total_stok_keluar')->nullable();
             $table->timestamps();
         });
     }

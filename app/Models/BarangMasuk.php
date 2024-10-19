@@ -10,7 +10,7 @@ class BarangMasuk extends Model
     use HasFactory;
     protected $table = 'barang_masuks';
     protected $primarykey = 'id';
-    protected $fillable = ['barang_id', 'supplier_id', 'karyawan_id', 'jumlah'];
+    protected $fillable = ['barang_id', 'supplier_id', 'karyawan_id', 'jumlah', 'deskripsi'];
     protected $guraded = [];
 
     public function barang()

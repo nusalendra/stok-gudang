@@ -28,7 +28,6 @@ use App\Http\Controllers\user_interface\Buttons;
 use App\Http\Controllers\user_interface\Carousel;
 use App\Http\Controllers\user_interface\Collapse;
 use App\Http\Controllers\user_interface\Dropdowns;
-use App\Http\Controllers\user_interface\Footer;
 use App\Http\Controllers\user_interface\ListGroups;
 use App\Http\Controllers\user_interface\Modals;
 use App\Http\Controllers\user_interface\Navbar;
@@ -144,6 +143,11 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => 'role:Karyawan'], function () {
         Route::get('/barang-masuk', [BarangMasukController::class, 'index'])->name('barang-masuk.index');
+        Route::get('/barang-masuk/barang-baru', [BarangMasukController::class, 'barangBaru'])->name('barang-masuk.barang-baru');
+        Route::post('/barang-masuk/barang-baru', [BarangMasukController::class, 'barangBaruStore'])->name('barang-masuk.barang-baru.store');
+        Route::get('/barang-masuk/barang-tersedia', [BarangMasukController::class, 'barangTersedia'])->name('barang-masuk.barang-tersedia');
+        Route::post('/barang-masuk/barang-tersedia', [BarangMasukController::class, 'barangTersediaStore'])->name('barang-masuk.barang-tersedia.store');
+
         Route::get('/barang-keluar', [BarangKeluarController::class, 'index'])->name('barang-keluar.index');
     });
     Route::post('/logout', [LoginBasic::class, 'destroy']);
