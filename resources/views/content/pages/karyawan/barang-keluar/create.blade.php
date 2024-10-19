@@ -1,6 +1,6 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Input Barang Tersedia')
+@section('title', 'Input Barang Keluar')
 
 @section('content')
     <style>
