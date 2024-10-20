@@ -66,11 +66,12 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label" for="harga_jual">Harga Jual <span
+                            <label class="col-sm-3 col-form-label" for="persentase_harga_jual">Harga Jual (Persentase) <span
                                     class="text-danger">*</span></label>
                             <div class="col-sm-9">
-                                <input type="number" min="0" value="0" name="harga_jual" class="form-control"
-                                    id="basic-default-name" placeholder="Masukkan Harga Jual" required />
+                                <input type="number" min="0" value="0" name="persentase_harga_jual"
+                                    class="form-control" id="basic-default-name" placeholder="Masukkan Harga Jual"
+                                    required />
                             </div>
                         </div>
                         <div class="row mb-3">

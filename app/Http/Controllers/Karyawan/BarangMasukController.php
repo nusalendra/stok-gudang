@@ -31,7 +31,11 @@ class BarangMasukController extends Controller
         $barang->ukuran = $request->ukuran;
         $barang->warna = $request->warna;
         $barang->harga_beli = $request->harga_beli;
-        $barang->harga_jual = $request->harga_jual;
+
+        $persentaseKeuntungan = $request->persentase_harga_jual / 100;
+        $keuntungan = $barang->harga_beli + ($barang->harga_beli * $persentaseKeuntungan);
+        $barang->harga_jual = $keuntungan;
+
         $barang->stok = $request->jumlah;
         $barang->save();
 
