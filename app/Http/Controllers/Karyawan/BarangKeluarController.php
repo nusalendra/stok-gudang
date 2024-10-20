@@ -41,5 +41,7 @@ class BarangKeluarController extends Controller
         $barangKeluar->karyawan_id = $user->karyawan->id;
         $barangKeluar->jumlah = $request->jumlah;
         $barangKeluar->save();
+
+        return redirect('/barang-keluar');
     }
 }
