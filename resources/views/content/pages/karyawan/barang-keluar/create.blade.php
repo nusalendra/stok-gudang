@@ -33,6 +33,18 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label" for="status_penjualan">Status Penjualan <span
+                                    class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <select class="form-select" name="status_penjualan" aria-label="Default select example"
+                                    required>
+                                    <option value="" selected disabled>Tentukan Status Penjualan</option>
+                                    <option value="Normal">Normal</option>
+                                    <option value="Obral">Obral</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label class="col-sm-3 col-form-label" for="jumlah">Jumlah Barang <span
                                     class="text-danger">*</span></label>
                             <div class="col-sm-9">
