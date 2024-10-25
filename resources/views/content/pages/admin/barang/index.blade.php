@@ -35,7 +35,9 @@
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Harga Jual</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Stok</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Tanggal Expired</th>
-                                <th class="text-uppercase text-xs font-weight-bolder text-start">Total Stok Keluar</th>
+                                <th class="text-uppercase text-xs font-weight-bolder text-start">Stok Keluar</th>
+                                <th class="text-uppercase text-xs font-weight-bolder text-start">Pendapatan</th>
+                                <th class="text-uppercase text-xs font-weight-bolder text-start">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,24 +58,49 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">Rp.
-                                                    {{ number_format($item->harga_beli, 0, ',', '.') }}
-                                                </h6>
+                                    @if (\Carbon\Carbon::parse($item->tanggal_expired)->isToday())
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">
+                                                        <s class="text-danger">Rp.
+                                                            {{ number_format($item->harga_beli, 0, ',', '.') }}</s>
+                                                        Rp. {{ number_format($item->harga_beli / 2, 0, ',', '.') }}
+                                                    </h6>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">Rp.
-                                                    {{ number_format($item->harga_jual, 0, ',', '.') }}
-                                                </h6>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">
+                                                        <s class="text-danger">Rp.
+                                                            {{ number_format($item->harga_jual, 0, ',', '.') }}</s>
+                                                        Rp. {{ number_format($item->harga_jual / 2, 0, ',', '.') }}
+                                                    </h6>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
+                                        </td>
+                                    @else
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">
+                                                        Rp. {{ number_format($item->harga_beli, 0, ',', '.') }}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">
+                                                        Rp. {{ number_format($item->harga_jual, 0, ',', '.') }}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    @endif
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
@@ -84,9 +111,15 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">
-                                                    {{ \Carbon\Carbon::parse($item->tanggal_expired)->locale('id')->translatedFormat('d F Y') }}
-                                                </h6>
+                                                @if (\Carbon\Carbon::parse($item->tanggal_expired)->isToday())
+                                                    <h6 class="mb-0 text-sm text-danger">
+                                                        {{ \Carbon\Carbon::parse($item->tanggal_expired)->locale('id')->translatedFormat('d F Y') }}
+                                                    </h6>
+                                                @else
+                                                    <h6 class="mb-0 text-sm">
+                                                        {{ \Carbon\Carbon::parse($item->tanggal_expired)->locale('id')->translatedFormat('d F Y') }}
+                                                    </h6>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>
@@ -98,6 +131,36 @@
                                                 @else
                                                     <h6 class="mb-0 text-sm">0</h6>
                                                 @endif
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">
+                                                    Rp. {{ number_format($item->pendapatan, 0, ',', '.') }}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <form id="delete-form-{{ $item->id }}"
+                                                    action="/barang/{{ $item->id }}" method="POST"
+                                                    role="form text-left"
+                                                    onsubmit="event.preventDefault(); hapusData({{ $item->id }})">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor"
+                                                            class="bi bi-trash3 mb-1 me-1" viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                                                        </svg>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
                                     </td>
@@ -190,5 +253,23 @@
                 }
             });
         });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function hapusData(id) {
+            Swal.fire({
+                title: "Hapus Barang ?",
+                text: "Barang akan dihapus secara permanen!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, Hapus"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
     </script>
 @endsection
