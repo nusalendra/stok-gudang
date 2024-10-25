@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
+use App\Models\BarangKeluar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -11,7 +12,15 @@ class BarangController extends Controller
 {
     public function index()
     {
-        $data = Barang::all();
+        $data = Barang::with('barangKeluar')->get();
+
+        foreach ($data as $item) {
+            $totalStokKeluar = $item->barangKeluar->sum('jumlah');
+            $pendapatan = $item->barangKeluar->sum('pendapatan');
+            $item->total_stok_keluar = $totalStokKeluar;
+            $item->pendapatan = $pendapatan;
+        }
+        // dd($data);
         return view('content.pages.admin.barang.index', compact('data'));
     }
 
@@ -97,5 +106,13 @@ class BarangController extends Controller
         $kelasCData = session('kelasCData', []);
 
         return view('content.pages.admin.barang.hasil-klasifikasi-perhitungan', compact('kelasA', 'kelasB', 'kelasC', 'dataHitungPersentase', 'dataHitungKumulatif', 'kelasAData', 'kelasBData', 'kelasCData'));
+    }
+
+    public function destroy($id)
+    {
+        $barang = Barang::find($id);
+        $barang->delete();
+
+        return redirect('/barang');
     }
 }

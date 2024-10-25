@@ -66,6 +66,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
         Route::post('/barang/klasifikasi-perhitungan', [BarangController::class, 'klasifikasiPerhitungan'])->name('barang.klasifikasi-perhitungan.store');
         Route::get('/barang/hasil-klasifikasi-perhitungan', [BarangController::class, 'hasilKlasifikasiPerhitungan'])->name('barang.hasil-klasifikasi-perhitungan.show');
+        Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
 
         Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier.index');
         Route::get('/supplier/create', [SupplierController::class, 'create'])->name('supplier.create');
