@@ -48,6 +48,30 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label" for="harga_beli">Harga Beli Baru <span
+                                    class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="number" min="0" value="0" name="harga_beli" class="form-control"
+                                    id="basic-default-name" placeholder="Masukkan Harga Beli" required />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label" for="persentase_harga_jual">Harga Jual (Persentase) <span
+                                    class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="number" min="0" value="0" name="persentase_harga_jual"
+                                    class="form-control" id="basic-default-name" placeholder="Masukkan Harga Jual"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label" for="tanggal_expired">Tanggal Barang Expired (Opsional)
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="date" name="tanggal_expired" class="form-control" id="basic-default-name" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label class="col-sm-3 col-form-label" for="deskripsi">Deskripsi</label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" name="deskripsi" placeholder="Tambahkan Deskripsi (Opsional)" id="floatingTextarea"></textarea>

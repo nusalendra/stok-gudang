@@ -75,6 +75,15 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label" for="tanggal_expired">Tanggal Barang Expired <span
+                                    class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="date" name="tanggal_expired" class="form-control" id="basic-default-name"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label class="col-sm-3 col-form-label" for="deskripsi">Deskripsi</label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" name="deskripsi" placeholder="Tambahkan Deskripsi (Opsional)" id="floatingTextarea"></textarea>

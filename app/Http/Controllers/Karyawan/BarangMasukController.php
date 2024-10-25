@@ -37,6 +37,7 @@ class BarangMasukController extends Controller
         $barang->harga_jual = $keuntungan;
 
         $barang->stok = $request->jumlah;
+        $barang->tanggal_expired = $request->tanggal_expired;
         $barang->save();
 
         $barangMasuk = new BarangMasuk();
@@ -62,7 +63,13 @@ class BarangMasukController extends Controller
         $user = Auth::user();
 
         $barang = Barang::find($request->barang_id);
+        $barang->harga_beli = $request->harga_beli;
+
+        $persentaseKeuntungan = $request->persentase_harga_jual / 100;
+        $keuntungan = $barang->harga_beli + ($barang->harga_beli * $persentaseKeuntungan);
+        $barang->harga_jual = $keuntungan;
         $barang->stok += $request->jumlah;
+        $barang->tanggal_expired = $request->tanggal_expired ?? $barang->tanggal_expired;
         $barang->save();
 
         $barangMasuk = new BarangMasuk();
