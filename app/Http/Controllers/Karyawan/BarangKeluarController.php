@@ -33,13 +33,21 @@ class BarangKeluarController extends Controller
             return redirect()->back()->with('error', 'Jumlah barang yang dikeluarkan melebihi stok yang tersedia');
         }
         $barang->stok -= $request->jumlah;
-        $barang->total_stok_keluar += $request->jumlah;
         $barang->save();
 
         $barangKeluar = new BarangKeluar();
         $barangKeluar->barang_id = $barang->id;
         $barangKeluar->karyawan_id = $user->karyawan->id;
+        $barangKeluar->status_penjualan = $request->status_penjualan;
         $barangKeluar->jumlah = $request->jumlah;
+
+        if ($request->status_penjualan == 'Obral') {
+            $barangKeluar->harga_jual = $barang->harga_jual / 2;
+        } else {
+            $barangKeluar->harga_jual = $barang->harga_jual;
+        }
+
+        $barangKeluar->pendapatan = $barangKeluar->harga_jual * $request->jumlah;
         $barangKeluar->save();
 
         return redirect('/barang-keluar');

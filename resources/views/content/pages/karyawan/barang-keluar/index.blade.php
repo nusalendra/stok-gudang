@@ -19,6 +19,7 @@
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">No</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Tanggal Barang Keluar</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Barang</th>
+                                <th class="text-uppercase text-xs font-weight-bolder text-start">Status Penjualan</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Jumlah</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Karyawan Pengeluar Barang
                                 </th>
@@ -45,6 +46,13 @@
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="mb-0 text-sm">{{ $item->barang->nama }}</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">{{ $item->status_penjualan }}</h6>
                                             </div>
                                         </div>
                                     </td>
