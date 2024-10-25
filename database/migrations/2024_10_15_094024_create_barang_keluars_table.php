@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('barang_id')->constrained('barangs')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('karyawan_id')->constrained('karyawans')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('status_penjualan');
+            $table->integer('harga_jual');
             $table->integer('jumlah');
+            $table->integer('pendapatan');
             $table->timestamps();
         });
     }

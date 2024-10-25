@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('harga_jual');
             $table->integer('stok');
             $table->date('tanggal_expired');
-            $table->integer('total_stok_keluar')->nullable();
             $table->timestamps();
         });
     }
