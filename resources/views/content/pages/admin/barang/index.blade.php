@@ -31,11 +31,10 @@
                             <tr>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">No</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Barang</th>
-                                <th class="text-uppercase text-xs font-weight-bolder text-start">Ukuran</th>
-                                <th class="text-uppercase text-xs font-weight-bolder text-start">Warna</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Harga Beli</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Harga Jual</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Stok</th>
+                                <th class="text-uppercase text-xs font-weight-bolder text-start">Tanggal Expired</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Total Stok Keluar</th>
                             </tr>
                         </thead>
@@ -52,21 +51,8 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $item->nama }}</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $item->ukuran }}</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $item->warna }}</h6>
+                                                <h6 class="mb-0 text-sm">{{ $item->nama }} (Ukuran {{ $item->ukuran }},
+                                                    Warna {{ $item->warna }})</h6>
                                             </div>
                                         </div>
                                     </td>
@@ -92,6 +78,15 @@
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="mb-0 text-sm">{{ $item->stok }}</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">
+                                                    {{ \Carbon\Carbon::parse($item->tanggal_expired)->locale('id')->translatedFormat('d F Y') }}
+                                                </h6>
                                             </div>
                                         </div>
                                     </td>
