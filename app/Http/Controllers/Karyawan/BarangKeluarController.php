@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Karyawan;
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
 use App\Models\BarangKeluar;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,6 +33,18 @@ class BarangKeluarController extends Controller
         if ($barang->stok < $request->jumlah) {
             return redirect()->back()->with('error', 'Jumlah barang yang dikeluarkan melebihi stok yang tersedia');
         }
+
+        $today = Carbon::now();
+        if ($today->greaterThanOrEqualTo($barang->tanggal_expired)) {
+            if ($request->status_penjualan === 'Normal') {
+                return back()->with('error', 'Penjualan ditolak karena sudah melewati tanggal expired, sehingga status penjualannya menjadi obral!');
+            }
+        } else {
+            if ($request->status_penjualan === 'Obral') {
+                return back()->with('error', 'Penjualan ditolak karena barang masih berlaku tetapi tidak dapat dijual dengan status obral!');
+            }
+        }
+
         $barang->stok -= $request->jumlah;
         $barang->save();
 
@@ -39,6 +52,7 @@ class BarangKeluarController extends Controller
         $barangKeluar->barang_id = $barang->id;
         $barangKeluar->karyawan_id = $user->karyawan->id;
         $barangKeluar->status_penjualan = $request->status_penjualan;
+        $barangKeluar->nama_pembeli = $request->nama_pembeli;
         $barangKeluar->jumlah = $request->jumlah;
 
         if ($request->status_penjualan == 'Obral') {

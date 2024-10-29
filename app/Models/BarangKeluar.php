@@ -10,7 +10,7 @@ class BarangKeluar extends Model
     use HasFactory;
     protected $table = 'barang_keluars';
     protected $primarykey = 'id';
-    protected $fillable = ['barang_id', 'karyawan_id', 'status_penjualan', 'harga_jual', 'jumlah', 'pendapatan'];
+    protected $fillable = ['barang_id', 'karyawan_id', 'nama_pembeli', 'status_penjualan', 'harga_jual', 'jumlah', 'pendapatan'];
     protected $guraded = [];
 
     public function barang()
