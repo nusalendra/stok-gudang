@@ -7,25 +7,28 @@ use App\Models\Barang;
 use App\Models\BarangKeluar;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = Barang::with('barangKeluar')->get();
+        $tanggal = $request->input('tanggal', Carbon::now()->toDateString());
 
-        foreach ($data as $item) {
-            $stokKeluarHarian = BarangKeluar::where('barang_id', $item->id)
-                ->whereDate('created_at', Carbon::now()->toDateString())
-                ->sum('jumlah');
+        $data = BarangKeluar::select(
+            'barangs.nama',
+            'barangs.ukuran',
+            'barangs.warna',
+            'barang_keluars.status_penjualan',
+            'barang_keluars.harga_jual',
+            DB::raw('SUM(barang_keluars.jumlah) as total_jumlah'),
+            DB::raw('SUM(barang_keluars.pendapatan) as total_pendapatan')
+        )
+            ->join('barangs', 'barangs.id', '=', 'barang_keluars.barang_id')
+            ->whereDate('barang_keluars.created_at', $tanggal)
+            ->groupBy('barangs.nama', 'barangs.ukuran', 'barangs.warna', 'barang_keluars.status_penjualan', 'barang_keluars.harga_jual')
+            ->get();
 
-            $pendapatanHarian = BarangKeluar::where('barang_id', $item->id)
-                ->whereDate('created_at', Carbon::now()->toDateString())
-                ->sum('pendapatan');
-
-            $item->stok_keluar_harian = $stokKeluarHarian;
-            $item->pendapatan_harian = $pendapatanHarian;
-        }
-        return view('content.pages.admin.laporan.index', compact('data'));
+        return view('content.pages.admin.laporan.index', compact('data', 'tanggal'));
     }
 }
