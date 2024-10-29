@@ -45,19 +45,19 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label" for="nama_pembeli">Nama Pembeli <span
-                                    class="text-danger">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="text" name="nama_pembeli" class="form-control" id="basic-default-name"
-                                    placeholder="Masukkan Nama Pembeli" required />
-                            </div>
-                        </div>
-                        <div class="row mb-3">
                             <label class="col-sm-3 col-form-label" for="jumlah">Jumlah Barang <span
                                     class="text-danger">*</span></label>
                             <div class="col-sm-9">
                                 <input type="number" name="jumlah" min="0" value="0" class="form-control"
                                     id="basic-default-name" placeholder="Masukkan Jumlah Barang" required />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label" for="nama_pembeli">Nama Pembeli <span
+                                    class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" name="nama_pembeli" class="form-control" id="basic-default-name"
+                                    placeholder="Masukkan Nama Pembeli" required />
                             </div>
                         </div>
                         <div class="row justify-content-end">
