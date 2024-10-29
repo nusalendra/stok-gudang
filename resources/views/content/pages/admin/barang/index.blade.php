@@ -64,7 +64,6 @@
                                     @endphp
 
                                     @if ($today->greaterThanOrEqualTo($tanggalExpired))
-                                        <!-- Jika tanggal sekarang >= tanggal_expired -->
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
@@ -88,7 +87,6 @@
                                             </div>
                                         </td>
                                     @else
-                                        <!-- Jika tanggal sekarang < tanggal_expired -->
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
@@ -189,74 +187,25 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.getElementById('klasifikasiButton').addEventListener('click', function() {
+            let timerInterval;
             Swal.fire({
-                title: 'Klasifikasi Perhitungan',
-                html: `
-            <p>Menentukan Kelas ABC untuk Rentang Nilai Presentase Kumulatif</p>
-            <label for="classA">Kelas A (Persentase):</label>
-            <input id="classA" class="swal2-input" type="number" min="0" max="100">
-            
-            <label for="classB">Kelas B (Persentase):</label>
-            <input id="classB" class="swal2-input" type="number" min="0" max="100">
-            
-            <label for="classC">Kelas C (Persentase):</label>
-            <input id="classC" class="swal2-input" type="number" min="0" max="100">
-        `,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Simpan',
-                cancelButtonText: 'Batal',
-                preConfirm: () => {
-                    const classA = document.getElementById('classA').value;
-                    const classB = document.getElementById('classB').value;
-                    const classC = document.getElementById('classC').value;
-
-                    if (!classA || !classB || !classC) {
-                        Swal.showValidationMessage('Semua nilai persentase harus diisi');
-                    } else if (parseInt(classA) + parseInt(classB) + parseInt(classC) !== 100) {
-                        Swal.showValidationMessage('Total persentase harus 100%');
-                    }
-
-                    return {
-                        classA,
-                        classB,
-                        classC
-                    };
+                title: "Perhitungan Sedang Diproses...",
+                html: "Mohon Tunggu <b></b> milidetik.",
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                    const timer = Swal.getPopup().querySelector("b");
+                    timerInterval = setInterval(() => {
+                        timer.textContent = `${Swal.getTimerLeft()}`;
+                    }, 100);
+                },
+                willClose: () => {
+                    clearInterval(timerInterval);
                 }
             }).then((result) => {
-                if (result.isConfirmed) {
-                    const {
-                        classA,
-                        classB,
-                        classC
-                    } = result.value;
-
-                    axios.post('/barang/klasifikasi-perhitungan', {
-                            kelasA: classA,
-                            kelasB: classB,
-                            kelasC: classC
-                        }, {
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            }
-                        })
-                        .then(response => {
-                            // Redirect ke halaman hasil setelah klasifikasi berhasil
-                            window.location.href = '/barang/hasil-klasifikasi-perhitungan';
-                        })
-                        .catch(error => {
-                            Swal.fire(
-                                'Error',
-                                'Terjadi kesalahan saat menyimpan data',
-                                'error'
-                            );
-                        });
-                } else if (result.isDismissed) {
-                    Swal.fire(
-                        'Dibatalkan',
-                        'Proses klasifikasi dibatalkan.',
-                        'error'
-                    );
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    window.location.href = "/barang/hasil-klasifikasi-perhitungan";
                 }
             });
         });
