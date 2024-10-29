@@ -3,11 +3,30 @@
 @section('title', 'Laporan')
 
 @section('content')
+    <style>
+        .my-swal-popup {
+            z-index: 1060 !important;
+        }
+
+        .swal2-backdrop-show {
+            z-index: 1059 !important;
+            background-color: rgba(0, 0, 0, 0.4) !important;
+        }
+
+        .navbar,
+        .sidebar {
+            z-index: 1000 !important;
+        }
+    </style>
+    <div class="text-end mb-3">
+        <button id="tanggalLaporanButton" type="button" class="btn btn-primary">Atur Tanggal Laporan Penjualan</button>
+    </div>
     <div class="card">
         <div class="card-header bg-primary text-white py-3 mb-3">
             <div class="d-flex justify-content-between align-items-center">
                 <h5 class="mb-0 fw-bold text-white">Laporan Penjualan Harian</h5>
-                <h6 class="mb-0 fw-bold text-white">{{ \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y') }}
+                <h6 class="mb-0 fw-bold text-white">
+                    {{ \Carbon\Carbon::parse($tanggal)->locale('id')->translatedFormat('d F Y') }}
                 </h6>
             </div>
         </div>
@@ -19,6 +38,8 @@
                             <tr>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">No</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Nama Barang</th>
+                                <th class="text-uppercase text-xs font-weight-bolder text-start">Status Penjualan</th>
+                                <th class="text-uppercase text-xs font-weight-bolder text-start">Harga Jual</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Terjual Hari Ini</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Pendapatan Hari Ini</th>
                             </tr>
@@ -36,7 +57,8 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $item->nama }} (Ukuran {{ $item->ukuran }},
+                                                <h6 class="mb-0 text-sm">{{ $item->nama }} (Ukuran
+                                                    {{ $item->ukuran }},
                                                     Warna {{ $item->warna }})</h6>
                                             </div>
                                         </div>
@@ -44,7 +66,21 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $item->stok_keluar_harian }}</h6>
+                                                <h6 class="mb-0 text-sm">{{ $item->status_penjualan }}</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">{{ $item->harga_jual }}</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">{{ $item->total_jumlah }}</h6>
                                             </div>
                                         </div>
                                     </td>
@@ -52,7 +88,7 @@
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="mb-0 text-sm">Rp.
-                                                    {{ number_format($item->pendapatan_harian, 0, ',', '.') }}</h6>
+                                                    {{ number_format($item->total_pendapatan, 0, ',', '.') }}</h6>
                                             </div>
                                         </div>
                                     </td>
@@ -70,4 +106,42 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('tanggalLaporanButton').addEventListener('click', function() {
+            Swal.fire({
+                title: 'Tanggal Laporan Penjualan',
+                html: `
+            <p>Sesuaikan Tanggal Laporan Penjualan yang Ingin Diperiksa</p>
+            <label for="tanggal">Input Tanggal :</label>
+            <input id="tanggal" class="swal2-input" type="date">
+        `,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Simpan',
+                cancelButtonText: 'Batal',
+                preConfirm: () => {
+                    const tanggal = document.getElementById('tanggal').value;
+                    return {
+                        tanggal
+                    };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const {
+                        tanggal
+                    } = result.value;
+
+                    window.location.href = `/laporan?tanggal=${tanggal}`;
+                } else if (result.isDismissed) {
+                    Swal.fire(
+                        'Dibatalkan',
+                        'Atur Tanggal Laporan Penjualan Dibatalkan',
+                        'error'
+                    );
+                }
+            });
+        });
+    </script>
 @endsection
