@@ -58,7 +58,13 @@
                                             </div>
                                         </div>
                                     </td>
-                                    @if (\Carbon\Carbon::parse($item->tanggal_expired)->isToday())
+                                    @php
+                                        $today = \Carbon\Carbon::now();
+                                        $tanggalExpired = \Carbon\Carbon::parse($item->tanggal_expired);
+                                    @endphp
+
+                                    @if ($today->greaterThanOrEqualTo($tanggalExpired))
+                                        <!-- Jika tanggal sekarang >= tanggal_expired -->
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
@@ -82,6 +88,7 @@
                                             </div>
                                         </td>
                                     @else
+                                        <!-- Jika tanggal sekarang < tanggal_expired -->
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
@@ -111,13 +118,13 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                @if (\Carbon\Carbon::parse($item->tanggal_expired)->isToday())
+                                                @if ($today->greaterThanOrEqualTo($tanggalExpired))
                                                     <h6 class="mb-0 text-sm text-danger">
-                                                        {{ \Carbon\Carbon::parse($item->tanggal_expired)->locale('id')->translatedFormat('d F Y') }}
+                                                        {{ $tanggalExpired->locale('id')->translatedFormat('d F Y') }}
                                                     </h6>
                                                 @else
                                                     <h6 class="mb-0 text-sm">
-                                                        {{ \Carbon\Carbon::parse($item->tanggal_expired)->locale('id')->translatedFormat('d F Y') }}
+                                                        {{ $tanggalExpired->locale('id')->translatedFormat('d F Y') }}
                                                     </h6>
                                                 @endif
                                             </div>
