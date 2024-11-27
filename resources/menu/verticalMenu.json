@@ -7,6 +7,12 @@
       "url": "dashboard"
     },
     {
+      "name": "Rak",
+      "icon": "menu-icon tf-icons bx bx-package",
+      "slug": "rak.index",
+      "url": "rak"
+    },
+    {
       "name": "Barang",
       "icon": "menu-icon tf-icons bx bx-package",
       "slug": "barang.index",
