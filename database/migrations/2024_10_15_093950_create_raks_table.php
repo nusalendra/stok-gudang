@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('raks', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis');
-            $table->integer('kapasitas');
+            $table->string('nama');
+            $table->string('lokasi');
+            $table->integer('jumlah_barang')->nullable();
             $table->timestamps();
         });
     }

@@ -27,9 +27,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/rak', [RakController::class, 'index'])->name('rak.index');
         Route::get('/rak/create', [RakController::class, 'create'])->name('rak.create');
         Route::post('/rak', [RakController::class, 'store'])->name('rak.store');
+        Route::get('/rak/{id}', [RakController::class, 'show'])->name('rak.show');
         Route::get('/rak/{id}/edit', [RakController::class, 'edit'])->name('rak.edit');
         Route::put('/rak/{id}', [RakController::class, 'update'])->name('rak.update');
         Route::delete('/rak/{id}', [RakController::class, 'destroy'])->name('rak.destroy');
+        Route::post('rak/{id}/kirimbarang', [RakController::class, 'kirimBarang']);
+        Route::get('/rak/{id}/masukkan-barang', [RakController::class, 'masukkanBarang'])->name('rak.masukkan-barang');
+        Route::put('/rak/{id}/hapus-barang/{barangId}', [RakController::class, 'hapusBarang'])->name('rak.hapus-barang');
+        Route::get('/rak/{id}/cetak-pdf', [RakController::class, 'cetakPDF'])->name('cetak-pdf');
 
         Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
         Route::get('/barang/hasil-klasifikasi-perhitungan', [BarangController::class, 'hasilKlasifikasiPerhitungan'])->name('barang.hasil-klasifikasi-perhitungan.show');

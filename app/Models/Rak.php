@@ -10,7 +10,7 @@ class Rak extends Model
     use HasFactory;
     protected $table = 'raks';
     protected $primarykey = 'id';
-    protected $fillable = ['jenis', 'kapasitas'];
+    protected $fillable = ['nama', 'lokasi', 'jumlah_barang'];
     protected $guraded = [];
 
     public function barang()
