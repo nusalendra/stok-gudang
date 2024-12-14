@@ -57,6 +57,8 @@
                                             href="{{ route('barang-masuk.index') }}">Barang Masuk</a>
                                         <a class="nav-item nav-link {{ request()->routeIs('barang-keluar.index') ? 'active text-primary' : 'text-dark' }} fw-semibold"
                                             href="{{ route('barang-keluar.index') }}">Barang Keluar</a>
+                                        <a class="nav-item nav-link {{ request()->routeIs('beli-barang.index') ? 'active text-primary' : 'text-dark' }} fw-semibold"
+                                            href="{{ route('beli-barang.index') }}">Beli Barang</a>
                                     </div>
                                 </div>
                             </div>
