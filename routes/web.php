@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\Karyawan\BarangKeluarController;
 use App\Http\Controllers\Karyawan\BarangMasukController;
+use App\Http\Controllers\Karyawan\BeliBarangController;
 
 // Main Page Route
 // Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
@@ -67,6 +68,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/barang-keluar', [BarangKeluarController::class, 'index'])->name('barang-keluar.index');
         Route::get('/barang-keluar/create', [BarangKeluarController::class, 'create'])->name('barang-keluar.create');
         Route::post('/barang-keluar', [BarangKeluarController::class, 'store'])->name('barang-keluar.store');
+
+        Route::get('/beli-barang', [BeliBarangController::class, 'index'])->name('beli-barang.index');
+        Route::post('/beli-barang/checkout-items', [BeliBarangController::class, 'checkoutItems'])->name('beli-barang.checkout-items');
+        Route::get('/beli-barang/checkout', [BeliBarangController::class, 'checkout'])->name('beli-barang.checkout');
+        Route::post('/beli-barang/checkout', [BeliBarangController::class, 'checkoutStore'])->name('beli-barang.checkout-store');
+        Route::post('/beli-barang/remove/{key}', [BeliBarangController::class, 'removeItems'])->name('beli-barang.remove-items');
     });
 
     Route::post('/logout', [LoginBasic::class, 'destroy']);
