@@ -38,10 +38,9 @@
                             <tr>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">No</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Nama Barang</th>
-                                <th class="text-uppercase text-xs font-weight-bolder text-start">Status Penjualan</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Harga Jual</th>
                                 <th class="text-uppercase text-xs font-weight-bolder text-start">Terjual Hari Ini</th>
-                                <th class="text-uppercase text-xs font-weight-bolder text-start">Pendapatan Hari Ini</th>
+                                <th class="text-uppercase text-xs font-weight-bolder text-start">Total Harga</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,21 +65,16 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $item->status_penjualan }}</h6>
+                                                <h6 class="mb-0 text-sm">Rp.
+                                                    {{ number_format($item->harga, 0, ',', '.') }}
+                                                </h6>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $item->harga_jual }}</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $item->total_jumlah }}</h6>
+                                                <h6 class="mb-0 text-sm">{{ $item->total_qty }}</h6>
                                             </div>
                                         </div>
                                     </td>
@@ -88,7 +82,8 @@
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="mb-0 text-sm">Rp.
-                                                    {{ number_format($item->total_pendapatan, 0, ',', '.') }}</h6>
+                                                    {{ number_format($item->total_qty * $item->harga, 0, ',', '.') }}
+                                                </h6>
                                             </div>
                                         </div>
                                     </td>
