@@ -18,7 +18,8 @@
             z-index: 1000 !important;
         }
     </style>
-    <div class="text-end mb-3">
+    <div class="text-center mb-3">
+        <a id="cetakPdfButton" href="/laporan/cetak-pdf" class="btn btn-dark" target="_blank">Cetak PDF</a>
         <button id="tanggalLaporanButton" type="button" class="btn btn-primary">Atur Tanggal Laporan Penjualan</button>
     </div>
     <div class="card">
@@ -104,13 +105,22 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        document.getElementById('tanggalLaporanButton').addEventListener('click', function() {
+        const cetakPdfButton = document.getElementById('cetakPdfButton');
+
+        const currentUrlParams = new URLSearchParams(window.location.search);
+        const filteredTanggal = currentUrlParams.get('tanggal');
+
+        if (filteredTanggal) {
+            cetakPdfButton.href = `/laporan/cetak-pdf?tanggal=${filteredTanggal}`;
+        }
+
+        tanggalLaporanButton.addEventListener('click', function() {
             Swal.fire({
                 title: 'Tanggal Laporan Penjualan',
                 html: `
             <p>Sesuaikan Tanggal Laporan Penjualan yang Ingin Diperiksa</p>
             <label for="tanggal">Input Tanggal :</label>
-            <input id="tanggal" class="swal2-input" type="date">
+            <input id="tanggal" class="swal2-input" type="date" value="${filteredTanggal || ''}">
         `,
                 icon: 'question',
                 showCancelButton: true,
@@ -118,6 +128,10 @@
                 cancelButtonText: 'Batal',
                 preConfirm: () => {
                     const tanggal = document.getElementById('tanggal').value;
+                    if (!tanggal) {
+                        Swal.showValidationMessage('Tanggal tidak boleh kosong');
+                        return false;
+                    }
                     return {
                         tanggal
                     };
@@ -128,7 +142,17 @@
                         tanggal
                     } = result.value;
 
-                    window.location.href = `/laporan?tanggal=${tanggal}`;
+                    if (tanggal) {
+                        cetakPdfButton.href = `/laporan/cetak-pdf?tanggal=${tanggal}`;
+
+                        window.location.href = `/laporan?tanggal=${tanggal}`;
+                    } else {
+                        Swal.fire(
+                            'Gagal',
+                            'Tanggal tidak valid.',
+                            'error'
+                        );
+                    }
                 } else if (result.isDismissed) {
                     Swal.fire(
                         'Dibatalkan',

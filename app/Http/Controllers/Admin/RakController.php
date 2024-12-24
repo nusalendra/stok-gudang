@@ -103,6 +103,6 @@ class RakController extends Controller
         $barang = Barang::where('rak_id', '=', $id)->get();
         $pdf = FacadePdf::loadView('content.pages.admin.rak.cetak-pdf', ['title' => 'Barang'], compact('rak', 'barang'));
         $pdf->setPaper('A4', 'potrait');
-        return $pdf->stream('report-online.pdf');
+        return $pdf->stream('cetak.pdf');
     }
 }
