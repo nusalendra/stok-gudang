@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/karyawan/{id}', [KaryawanController::class, 'destroy'])->name('karyawan.destroy');
 
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+        Route::get('/laporan/cetak-pdf', [LaporanController::class, 'cetakPDF'])->name('laporan.cetak-pdf');
     });
 
     Route::group(['middleware' => 'role:Karyawan'], function () {
