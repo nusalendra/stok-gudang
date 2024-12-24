@@ -15,7 +15,8 @@ class BeliBarangController extends Controller
 {
     public function index()
     {
-        $data = Barang::with('barangKeluar')->get();
+        $data = Barang::with('barangKeluar', 'rak')->get();
+
         return view('content.pages.karyawan.beli-barang.index', compact('data'));
     }
 
@@ -40,6 +41,57 @@ class BeliBarangController extends Controller
 
         return view('content.pages.karyawan.beli-barang.checkout', compact('items'));
     }
+
+    public function masukkanKeranjang(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $karyawan = Karyawan::where('user_id', $user->id)->first();
+            $totalHarga = 0;
+
+            $pembelian = new Pembelian();
+            $pembelian->karyawan_id = $karyawan->id;
+            $pembelian->nama_pembeli = $request->nama_pembeli;
+            $pembelian->status_pembelian = 'Dalam Keranjang';
+            $pembelian->metode_pembayaran = $request->metode_pembayaran;
+            $pembelian->total_harga = 0;
+            $pembelian->save();
+
+            $pesananIds = [];
+
+            foreach ($request->items as $item) {
+                $barangId = $item['id'];
+                $qty = $item['jumlah'];
+                $harga = $item['harga'];
+
+                $pesanan = Pesanan::create([
+                    'barang_id' => $barangId,
+                    'qty' => $qty,
+                    'harga' => $harga,
+                ]);
+
+                $pesananIds[] = $pesanan->id;
+                $totalHarga += $harga * $qty;
+            }
+
+            $pembelian->total_harga = $totalHarga;
+            $pembelian->save();
+
+            $pembelian->pesanan()->attach($pesananIds);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Transaksi berhasil diproses.',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat memproses transaksi. Silakan coba lagi.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
 
     public function removeItems($key)
     {
@@ -76,6 +128,7 @@ class BeliBarangController extends Controller
             $pembelian = new Pembelian();
             $pembelian->karyawan_id = $karyawan->id;
             $pembelian->nama_pembeli = $request->nama_pembeli;
+            $pembelian->status_pembelian = 'Sukses';
             $pembelian->metode_pembayaran = $request->metode_pembayaran;
             $pembelian->total_harga = 0;
             $pembelian->save();
@@ -103,6 +156,81 @@ class BeliBarangController extends Controller
             $pembelian->total_harga = $totalHarga;
             $pembelian->save();
             $pembelian->pesanan()->attach($pesananIds);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Transaksi berhasil diproses.',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat memproses transaksi. Silakan coba lagi.',
+            ], 500);
+        }
+    }
+
+    public function removeItemsKeranjang($id)
+    {
+        $pesanan = Pesanan::with('pembelian')->find($id);
+
+        if ($pesanan) {
+            $harga = $pesanan->harga;
+            $pembelian = $pesanan->pembelian()->first();
+
+            if ($pembelian) {
+                $pembelian->total_harga -= $harga;
+                $pembelian->save();
+            }
+
+            $pesanan->delete();
+            return response()->json(['success' => true, 'message' => 'Barang berhasil dihapus.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Barang tidak ditemukan.']);
+    }
+
+    public function checkoutKeranjang($id)
+    {
+        $pembeli = Pembelian::find($id);
+
+        return view('content.pages.karyawan.keranjang-pesanan.checkout-keranjang', compact('pembeli'));
+    }
+
+    public function updateCheckoutKeranjang(Request $request, $id)
+    {
+        foreach ($request->qty as $pesananId => $qty) {
+            $pesanan = Pesanan::where('id', $pesananId)->first();
+            $barangId = $pesanan->barang_id;
+
+            $barang = Barang::find($barangId);
+            if ($qty > $barang->stok) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Stok Barang {$barang->nama} tidak mencukupi. Stok tersedia : {$barang->stok}",
+                ], 400);
+            }
+        }
+
+        try {
+            $totalHarga = 0;
+            foreach ($request->qty as $pesananId => $qty) {
+                $pesanan = Pesanan::where('id', $pesananId)->first();
+
+                if ($pesanan) {
+                    $pesanan->qty = $qty;
+                    $pesanan->save();
+
+                    $totalHarga += $pesanan->harga * $qty;
+                }
+            }
+
+            $pembelian = Pembelian::find($id);
+            if ($pembelian) {
+                $pembelian->total_harga = $totalHarga;
+                $pembelian->status_pembelian = 'Sukses';
+                $pembelian->metode_pembayaran = $request->metode_pembayaran;
+                $pembelian->save();
+            }
 
             return response()->json([
                 'success' => true,

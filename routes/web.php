@@ -11,6 +11,7 @@ use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\Karyawan\BarangKeluarController;
 use App\Http\Controllers\Karyawan\BarangMasukController;
 use App\Http\Controllers\Karyawan\BeliBarangController;
+use App\Http\Controllers\Karyawan\KeranjangPesananController;
 
 // Main Page Route
 // Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
@@ -65,15 +66,24 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/barang-masuk/barang-tersedia', [BarangMasukController::class, 'barangTersedia'])->name('barang-masuk.barang-tersedia');
         Route::post('/barang-masuk/barang-tersedia', [BarangMasukController::class, 'barangTersediaStore'])->name('barang-masuk.barang-tersedia.store');
 
-        Route::get('/barang-keluar', [BarangKeluarController::class, 'index'])->name('barang-keluar.index');
-        Route::get('/barang-keluar/create', [BarangKeluarController::class, 'create'])->name('barang-keluar.create');
-        Route::post('/barang-keluar', [BarangKeluarController::class, 'store'])->name('barang-keluar.store');
+        // Route::get('/barang-keluar', [BarangKeluarController::class, 'index'])->name('barang-keluar.index');
+        // Route::get('/barang-keluar/create', [BarangKeluarController::class, 'create'])->name('barang-keluar.create');
+        // Route::post('/barang-keluar', [BarangKeluarController::class, 'store'])->name('barang-keluar.store');
 
         Route::get('/beli-barang', [BeliBarangController::class, 'index'])->name('beli-barang.index');
         Route::post('/beli-barang/checkout-items', [BeliBarangController::class, 'checkoutItems'])->name('beli-barang.checkout-items');
         Route::get('/beli-barang/checkout', [BeliBarangController::class, 'checkout'])->name('beli-barang.checkout');
         Route::post('/beli-barang/checkout', [BeliBarangController::class, 'checkoutStore'])->name('beli-barang.checkout-store');
+        Route::post('/beli-barang/masukkan-keranjang', [BeliBarangController::class, 'masukkanKeranjang'])->name('beli-barang.masukkan-keranjang');
         Route::post('/beli-barang/remove/{key}', [BeliBarangController::class, 'removeItems'])->name('beli-barang.remove-items');
+
+        Route::get('/beli-barang/checkout/{id}', [BeliBarangController::class, 'checkoutKeranjang'])->name('keranjang-pesanan.checkout-keranjang');
+        Route::post('/beli-barang/checkout/{id}', [BeliBarangController::class, 'updateCheckoutKeranjang'])->name('keranjang-pesanan.update-checkout-keranjang');
+        Route::post('/beli-barang/remove-items-keranjang/{id}', [BeliBarangController::class, 'removeItemsKeranjang'])->name('beli-barang.remove-items-keranjang');
+
+        Route::get('/keranjang-pesanan', [KeranjangPesananController::class, 'index'])->name('keranjang-pesanan.index');
+        Route::get('/keranjang-pesanan/{id}', [KeranjangPesananController::class, 'show'])->name('keranjang-pesanan.show');
+        Route::delete('/keranjang-pesanan/{id}', [KeranjangPesananController::class, 'destroy'])->name('keranjang-pesanan.destroy');
     });
 
     Route::post('/logout', [LoginBasic::class, 'destroy']);

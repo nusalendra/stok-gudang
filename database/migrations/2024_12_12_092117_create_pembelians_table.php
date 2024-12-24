@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('karyawan_id')->constrained('karyawans')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('nama_pembeli');
-            $table->string('metode_pembayaran');
+            $table->string('status_pembelian');
+            $table->string('metode_pembayaran')->nullable();
             $table->integer('total_harga');
             $table->timestamps();
         });

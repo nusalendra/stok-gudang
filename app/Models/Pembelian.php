@@ -10,7 +10,7 @@ class Pembelian extends Model
     use HasFactory;
     protected $table = 'pembelians';
     protected $primarykey = 'id';
-    protected $fillable = ['karyawan_id', 'nama_pembeli', 'metode_pembayaran', 'total_harga'];
+    protected $fillable = ['karyawan_id', 'nama_pembeli', 'status_pembelian', 'metode_pembayaran', 'total_harga'];
     protected $guraded = [];
 
     public function karyawan()
