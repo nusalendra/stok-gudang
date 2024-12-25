@@ -67,9 +67,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/barang-masuk/barang-tersedia', [BarangMasukController::class, 'barangTersedia'])->name('barang-masuk.barang-tersedia');
         Route::post('/barang-masuk/barang-tersedia', [BarangMasukController::class, 'barangTersediaStore'])->name('barang-masuk.barang-tersedia.store');
 
-        // Route::get('/barang-keluar', [BarangKeluarController::class, 'index'])->name('barang-keluar.index');
-        // Route::get('/barang-keluar/create', [BarangKeluarController::class, 'create'])->name('barang-keluar.create');
-        // Route::post('/barang-keluar', [BarangKeluarController::class, 'store'])->name('barang-keluar.store');
+        Route::get('/barang-keluar', [BarangKeluarController::class, 'index'])->name('barang-keluar.index');
+        Route::get('/barang-keluar/create', [BarangKeluarController::class, 'create'])->name('barang-keluar.create');
+        Route::post('/barang-keluar', [BarangKeluarController::class, 'store'])->name('barang-keluar.store');
 
         Route::get('/beli-barang', [BeliBarangController::class, 'index'])->name('beli-barang.index');
         Route::post('/beli-barang/checkout-items', [BeliBarangController::class, 'checkoutItems'])->name('beli-barang.checkout-items');

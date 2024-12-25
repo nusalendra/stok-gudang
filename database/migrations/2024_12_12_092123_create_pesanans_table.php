@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('pesanans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('barang_id')->constrained('barangs')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('status_penjualan')->nullable();
             $table->integer('qty');
             $table->integer('harga');
+            $table->integer('pendapatan')->nullable();
             $table->timestamps();
         });
     }
