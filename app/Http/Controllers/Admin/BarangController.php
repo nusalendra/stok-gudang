@@ -4,19 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
-use App\Models\BarangKeluar;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class BarangController extends Controller
 {
     public function index()
     {
-        $data = Barang::with('barangKeluar')->get();
+        $data = Barang::with('pesanan')->get();
 
         foreach ($data as $item) {
-            $totalStokKeluar = $item->barangKeluar->sum('jumlah');
-            $pendapatan = $item->barangKeluar->sum('pendapatan');
+            $totalStokKeluar = $item->pesanan->sum('qty');
+            $pendapatan = $item->pesanan->sum('pendapatan');
             $item->total_stok_keluar = $totalStokKeluar;
             $item->pendapatan = $pendapatan;
         }
@@ -32,10 +29,10 @@ class BarangController extends Controller
         $dataBarang = [];
 
         foreach ($barang as $item) {
-            $stokTerjualNormal = $item->barangKeluar->where('status_penjualan', 'Normal')->sum('jumlah');
-            $stokTerjualObral = $item->barangKeluar->where('status_penjualan', 'Obral')->sum('jumlah');
+            $stokTerjualNormal = $item->pesanan->where('status_penjualan', 'Normal')->sum('qty');
+            $stokTerjualObral = $item->pesanan->where('status_penjualan', 'Obral')->sum('qty');
 
-            $pendapatan = $item->barangKeluar->sum('pendapatan');
+            $pendapatan = $item->pesanan->sum('pendapatan');
             $totalPendapatan += $pendapatan;
 
             $dataBarang[] = [
