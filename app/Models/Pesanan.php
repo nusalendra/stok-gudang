@@ -10,7 +10,7 @@ class Pesanan extends Model
     use HasFactory;
     protected $table = 'pesanans';
     protected $primarykey = 'id';
-    protected $fillable = ['barang_id', 'qty', 'harga'];
+    protected $fillable = ['barang_id', 'status_penjualan', 'qty', 'harga', 'pendapatan'];
     protected $guraded = [];
 
     public function barang()
