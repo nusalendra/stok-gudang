@@ -23,7 +23,7 @@ class TotalPendapatanBarangChart
 
         foreach ($barang as $item) {
             $namaBarang[] = $item->nama;
-            $pendapatanBarang[] = $item->barangKeluar->sum('pendapatan');
+            $pendapatanBarang[] = $item->pesanan->sum('pendapatan');
         }
         return $this->chart->barChart()
             ->setTitle('Chart Total Pendapatan Barang')
