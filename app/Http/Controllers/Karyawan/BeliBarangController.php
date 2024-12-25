@@ -16,7 +16,7 @@ class BeliBarangController extends Controller
 {
     public function index()
     {
-        $data = Barang::with('barangKeluar', 'rak')->get();
+        $data = Barang::with('rak')->get();
 
         return view('content.pages.karyawan.beli-barang.index', compact('data'));
     }
