@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Charts\TotalPendapatanBarangChart;
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
-use App\Models\BarangKeluar;
 use App\Models\BarangMasuk;
 use App\Models\Pesanan;
 use Carbon\Carbon;

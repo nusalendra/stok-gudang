@@ -23,11 +23,6 @@ class Karyawan extends Model
         return $this->hasMany(BarangMasuk::class, 'barang_id');
     }
 
-    public function barangKeluar()
-    {
-        return $this->hasMany(BarangKeluar::class, 'barang_id');
-    }
-
     public function pembelian()
     {
         return $this->hasMany(Pembelian::class);

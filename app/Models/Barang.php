@@ -23,11 +23,6 @@ class Barang extends Model
         return $this->hasMany(BarangMasuk::class, 'barang_id');
     }
 
-    public function barangKeluar()
-    {
-        return $this->hasMany(BarangKeluar::class, 'barang_id');
-    }
-
     public function pesanan()
     {
         return $this->hasMany(Pesanan::class);
