@@ -38,8 +38,8 @@
                 <div class="col-lg-3 col-md-12 col-6 mb-4">
                     <div class="card">
                         <div class="card-body">
-                            <span class="fw-semibold d-block mb-1">Total Barang Keluar</span>
-                            <h3 class="card-title mb-2 text-primary">{{ $totalBarangKeluar }}</h3>
+                            <span class="fw-semibold d-block mb-1">Total Barang Dibeli</span>
+                            <h3 class="card-title mb-2 text-primary">{{ $totalBarangDibeli }}</h3>
                         </div>
                     </div>
                 </div>
