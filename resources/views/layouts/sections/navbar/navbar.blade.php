@@ -25,7 +25,7 @@
 @endif
 
 <!-- ! Not required for layout-without-menu -->
-@if (!isset($navbarHideToggle))
+@if (!isset($navbarHideToggle) && Auth::user()->role == 'Admin')
     <div
         class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0{{ isset($menuHorizontal) ? ' d-xl-none ' : '' }} {{ isset($contentNavbar) ? ' d-xl-none ' : '' }}">
         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
@@ -34,17 +34,15 @@
     </div>
 @endif
 
+
 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
     <!-- Search -->
     <div class="navbar-nav align-items-center">
         <div class="app-brand justify-content-center">
-            @if (Auth::user()->role == 'Admin')
-                {{-- <h5 class="mt-3 text-dark fw-bold">Kerapatan Gereja Protestan Minahasa (KGPM)</h5> --}}
-            @elseif(Auth::user()->role == 'Karyawan')
+            @if (Auth::user()->role == 'Karyawan')
                 <div class="navbar-nav align-items-center">
                     <div class="app-brand justify-content-center">
                         <nav class="navbar navbar-example navbar-expand-lg ">
-                            <img src="logo.jpg" alt="" width="50" class="me-2">
                             <div class="container-fluid">
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#navbar-ex-2" aria-controls="navbar-ex-2" aria-expanded="false"

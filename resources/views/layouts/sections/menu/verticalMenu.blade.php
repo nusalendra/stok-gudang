@@ -1,12 +1,12 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-    <style>
+    {{-- <style>
         .layout-wrapper .layout-container .menu,
         .layout-wrapper .layout-container .sidebar,
         .layout-wrapper .layout-container .verticalMenu,
         .layout-wrapper .layout-container .layout-menu {
-            z-index: 999 !important;
+            z-index: 1050 !important;
         }
-    </style>
+    </style> --}}
     <!-- ! Hide app brand if navbar-full -->
     <div class="app-brand demo mb-4">
         <img src="/logo.jpeg" alt="" width="200">
